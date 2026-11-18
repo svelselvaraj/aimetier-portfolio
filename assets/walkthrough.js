@@ -1,13 +1,10 @@
 const tours = {
   instance: [
-    ["A request from the workspace portal reaches the HTTPS gateway. The gateway routes it to the web API, where the platform can check who is making the request.", "gateway", "M222 84 H295"],
-    ["The API resolves the user’s company and records the task in PostgreSQL. Row-level policies keep the task within that company’s workspace.", "web", "M488 86 H550"],
-    ["PostgreSQL signals that work is ready. The leader worker picks up the task in the background while the web API continues serving the portal.", "worker", "M647 122 V198"],
-    ["The worker requests a lease for the run. The runner controller holds the Kubernetes permissions needed to provision the execution environment.", "control", "M759 244 H848"],
-    ["The controller prepares an isolated runner for the assigned agent. The runner receives a scoped workspace and only the tools permitted for the job.", "task", "M957 285 V334 H706 V376"],
-    ["The runner uses its configured agent adapter. Claude Code, Codex, Gemini and Hermes are examples of runtimes that can participate in the same orchestration flow.", "route-adapter", "M606 453 H529 V534 H363"],
-    ["For inference, the AI gateway forwards the adapter’s request to the configured model. The workspace policy determines the model group and available fallback order.", "route-model", "M183 578 V623 H371 M571 623 H701"],
-    ["When the agent requests a connected tool, the MCP proxy checks its permissions and forwards the call to the workspace’s configured MCP server.", "route-tools", "M183 623 V700 H371 M571 700 H701"]
+    ["Agent Connect sends the request into the platform with the workspace and run context needed to identify the work.", "connect", "M43 201 H201"],
+    ["The gateway is the entry point. Workspace policy determines which execution capabilities the agent can use for this request.", "gateway", "M228 201 H304"],
+    ["For agent execution, the platform invokes the configured adapter. Claude Code, Codex, Gemini and Hermes are examples of supported runtimes.", "adapter", "M499 201 H564 V97 H650"],
+    ["For an LLM call, the platform selects the model and provider configured for the workspace and sends the inference request.", "llm", "M499 201 H650"],
+    ["For a connected tool, the MCP proxy checks the agent’s permissions and forwards the call to the authorised workspace server.", "mcp", "M499 201 H564 V305 H650"]
   ],
   run: [
     ["A weekly schedule triggers the data-quality brief. Once the schedule and agent are configured, the task can start without someone opening a chat.", "scope", "M100 119 V174"],
@@ -31,16 +28,14 @@ function initialise(panel) {
   const controls = panel.querySelector(".controls");
   const play = controls.querySelector(".play");
   const steps = tours[panel.id];
-  const zoom = document.createElement("button");
-  zoom.type = "button";
-  zoom.className = "zoom";
-  zoom.textContent = "Enlarge labels";
-  zoom.setAttribute("aria-pressed", "false");
-  controls.insertBefore(zoom, controls.querySelector("output"));
+  const output = panel.querySelector("output");
+  const zoom = controls.querySelector(".zoom");
   zoom.addEventListener("click", () => {
     const enlarged = panel.classList.toggle("enlarged");
     zoom.setAttribute("aria-pressed", String(enlarged));
-    zoom.textContent = enlarged ? "Fit diagram" : "Enlarge labels";
+    zoom.title = enlarged ? "Fit diagram" : "Enlarge diagram";
+    zoom.setAttribute("aria-label", zoom.title);
+    if (!enlarged) panel.querySelector(".paper").scrollLeft = 0;
   });
   let index = -1;
   function step() {
@@ -52,7 +47,7 @@ function initialise(panel) {
     doc.getElementById("signal")?.remove();
     const target = doc.getElementById(id);
     target.classList.add("lit");
-    controls.querySelector("output").textContent = (index + 1) + " / " + steps.length + "   " + caption;
+    output.textContent = (index + 1) + " / " + steps.length + "   " + caption;
     if (!reduced.matches) {
       const dot = doc.createElementNS(ns, "circle");
       dot.id = "signal";
@@ -87,7 +82,8 @@ function initialise(panel) {
       timer = undefined;
     }
     drawing()?.pauseAnimations?.();
-    play.textContent = "Play flow";
+    play.title = "Play flow";
+    play.setAttribute("aria-label", play.title);
   }
   function sync() {
     if (!visible || panel.hidden || document.hidden || manualPause || controls.hidden) {
@@ -97,8 +93,9 @@ function initialise(panel) {
     if (timer !== undefined) return;
     drawing()?.unpauseAnimations?.();
     if (index < 0) step();
-    controls.querySelector("output").setAttribute("aria-live", "off");
-    play.textContent = "Pause";
+    output.setAttribute("aria-live", "off");
+    play.title = "Pause";
+    play.setAttribute("aria-label", play.title);
     startedAt = performance.now();
     timer = setTimeout(() => {
       timer = undefined;
@@ -124,7 +121,7 @@ function initialise(panel) {
   play.addEventListener("click", toggle);
   controls.querySelector(".next").addEventListener("click", () => {
     manualPause = true;
-    controls.querySelector("output").setAttribute("aria-live", "polite");
+    output.setAttribute("aria-live", "polite");
     pause();
     step();
     remaining = stepDuration;

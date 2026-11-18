@@ -26,15 +26,17 @@
 <div class="section-title"><div><p class="kicker">System design</p><h2>Inside an AImetier instance</h2></div></div>
 <div class="atlas">
 <article class="plate" id="instance">
-<div class="plate-head"><h3>Instance components</h3><a href="./assets/instance.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
-<div class="paper"><object type="image/svg+xml" data="./assets/instance.svg" aria-label="Component diagram of an AImetier Kubernetes instance"><a href="./assets/instance.svg">View component diagram</a></object></div>
-<div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="off"></output></div>
-<details class="text-map"><summary>Read the component map</summary><p>The workspace portal and the operator console reach the web API through the gateway. WebSocket (WS) carries live updates. Row-level security (RLS) scopes database access. PostgreSQL holds tenant-scoped work and wakes the leader worker. The worker dispatches a run, and the controller provisions isolated compute. The agent adapter sends inference requests through the AI gateway to the configured model. When a task needs a connected tool, the MCP proxy checks the agent’s permissions and forwards the call to the corresponding workspace MCP server. The browser has a separate session and outbound proxy. Object storage holds durable files and session state.</p></details>
+<div class="plate-head"><h3>Instance components</h3></div>
+<div class="diagram-frame"><div class="paper"><object type="image/svg+xml" data="./assets/instance.svg" aria-label="Agent Connect reaches the gateway, then branches to an agent adapter, an LLM call or an MCP tool"><a href="./assets/instance.svg">View component diagram</a></object></div>
+<div class="controls" hidden><button class="play" type="button" aria-label="Play flow" title="Play flow"></button><button class="next" type="button" aria-label="Next step" title="Next step"></button><button class="zoom" type="button" aria-label="Enlarge diagram" aria-pressed="false" title="Enlarge diagram"></button></div></div>
+<output class="step-caption" aria-live="off"></output>
+<details class="text-map"><summary>Read the component map</summary><p>Agent Connect sends a request to the platform gateway. This logical view groups three capabilities behind that entry point: adapter execution, LLM calls and MCP tools. The workspace portal and operator console also use the web API. WebSocket (WS) carries live updates. Row-level security (RLS) scopes database access. PostgreSQL holds tenant-scoped work and wakes the leader worker. The worker dispatches a run, and the controller provisions isolated compute. The agent adapter sends inference requests through the AI gateway to the configured model. When a task needs a connected tool, the MCP proxy checks the agent’s permissions and forwards the call to the corresponding workspace MCP server. The browser has a separate session and outbound proxy. Object storage holds durable files and session state.</p></details>
 </article>
 <article class="plate" id="run">
-<div class="plate-head"><h3>Autonomous run · A scheduled data-quality brief</h3><a href="./assets/system.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
-<div class="paper"><object type="image/svg+xml" data="./assets/system.svg" aria-label="Agent run from scheduling through verification, with rework and operator approval branches"><a href="./assets/system.svg">View run diagram</a></object></div>
-<div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="off"></output></div>
+<div class="plate-head"><h3>Autonomous run · A scheduled data-quality brief</h3></div>
+<div class="diagram-frame"><div class="paper"><object type="image/svg+xml" data="./assets/system.svg" aria-label="Agent run from scheduling through verification, with rework and operator approval branches"><a href="./assets/system.svg">View run diagram</a></object></div>
+<div class="controls" hidden><button class="play" type="button" aria-label="Play flow" title="Play flow"></button><button class="next" type="button" aria-label="Next step" title="Next step"></button><button class="zoom" type="button" aria-label="Enlarge diagram" aria-pressed="false" title="Enlarge diagram"></button></div></div>
+<output class="step-caption" aria-live="off"></output>
 <details class="text-map"><summary>Read the run trace</summary><p>A schedule wakes the assigned agent. The worker loads permitted context and the budget. The runner prepares the brief using its configured tools. The server verifies the checks for this run. Work can return for revision, finish under policy, or wait for operator approval. Usage and the review decision remain attached to the run.</p></details>
 </article></div>
 </section>
