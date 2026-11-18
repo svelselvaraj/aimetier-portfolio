@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#111724">
 <meta name="description" content="Sundaravel Selvaraj’s engineering case study of AImetier, a platform for running, coordinating and reviewing autonomous AI agents.">
 <title>AImetier — Sundaravel Selvaraj</title>
-<link rel="stylesheet" href="./assets/style.css?v=3c599174c5">
-<script src="./assets/walkthrough.js?v=3ba87c6551" defer></script>
+<link rel="stylesheet" href="./assets/style.css?v=6d5186b48c">
+<script src="./assets/walkthrough.js?v=19d6feb89f" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to case study</a>
@@ -28,10 +28,10 @@
 <div class="atlas">
 <article class="plate" id="instance">
 <div class="plate-head"><h3>Instance components</h3></div>
-<div class="diagram-frame"><div class="paper"><object type="image/svg+xml" data="./assets/instance.svg?v=be3bd82172" aria-label="Instance architecture from the workspace portal to the worker, isolated runner with its agent adapter, then the AI gateway, with branches for LLM calls and an MCP tools connection"><a href="./assets/instance.svg?v=be3bd82172">View component diagram</a></object></div>
+<div class="diagram-frame"><div class="paper"><object type="image/svg+xml" data="./assets/instance.svg?v=1f680a1840" aria-label="AImetier instance with an HTTPS entry point and separate outbound paths for model calls, MCP tools and browser traffic"><a href="./assets/instance.svg?v=1f680a1840">View component diagram</a></object></div>
 <div class="controls" hidden><button class="play" type="button" aria-label="Play flow" title="Play flow"></button><button class="next" type="button" aria-label="Next step" title="Next step"></button><button class="zoom" type="button" aria-label="Enlarge diagram" aria-pressed="false" title="Enlarge diagram"></button></div></div>
 <output class="step-caption" aria-live="off"></output>
-<details class="text-map"><summary>Read the component map</summary><p>The workspace portal and operator console reach the web API through the HTTPS gateway. WebSocket (WS) carries live updates. Row-level security (RLS) scopes database access. PostgreSQL holds tenant-scoped work and wakes the leader worker. The worker dispatches a run, and the controller provisions isolated compute. Inside the isolated runner, the agent adapter connects Claude Code, Codex or Hermes to the AI gateway. The gateway routes requests to a model for inference or to an MCP tools connection. When a task needs a connected tool, the MCP proxy checks the agent’s permissions and forwards the call to the corresponding workspace MCP server. The browser has a separate session and outbound proxy. Object storage holds durable files and session state.</p></details>
+<details class="text-map"><summary>Read the component map</summary><p>The workspace portal and operator console reach the web API through the HTTPS gateway. PostgreSQL stores tasks and notifies the leader worker. Object storage holds files and session state. The worker dispatches tasks to the runner controller, which provisions the isolated agent runner and its adapter. Model calls go through the AI gateway to an LLM provider. Connected tool calls go through the MCP proxy for permission checks. Browser actions go through the browser broker to an isolated session. The egress proxy checks the destination before the browser reaches a website.</p></details>
 </article>
 <article class="plate" id="run">
 <div class="plate-head"><h3>Autonomous run · A scheduled data-quality brief</h3></div>

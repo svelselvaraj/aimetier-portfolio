@@ -1,13 +1,13 @@
 const tours = {
   instance: [
-    ["A request from the workspace portal reaches the HTTPS gateway. The gateway routes it to the web API, where the platform can check who is making the request.", "gateway", "M222 84 H295"],
-    ["The API resolves the user’s company and records the task in PostgreSQL. Row-level policies keep the task within that company’s workspace.", "web", "M488 86 H550"],
-    ["PostgreSQL signals that work is ready. The leader worker picks up the task in the background while the web API continues serving the portal.", "worker", "M647 122 V198"],
-    ["The worker requests a lease for the run. The runner controller holds the Kubernetes permissions needed to provision the execution environment.", "control", "M759 244 H848"],
-    ["The controller prepares an isolated runner for the assigned agent. The runner receives a scoped workspace and only the tools permitted for the job.", "task", "M957 285 V334 H706 V376"],
-    ["Inside the runner, the configured agent adapter connects Claude Code, Codex or Hermes to the AI gateway. The gateway applies workspace policy before routing the request.", "exec-gateway", "M707 492 V581 H409 V644"],
-    ["For inference, the AI gateway sends an LLM call to the model and provider configured for this workspace.", "route-model", "M505 685 H570 V633 H656"],
-    ["For a tool call, the gateway uses the MCP tools connection. The MCP proxy checks the agent’s permissions before forwarding the call to the workspace server.", "route-mcp", "M505 685 H570 V737 H656"]
+    ["The workspace portal and operator console enter the instance through the HTTPS gateway, which forwards requests to the web API.", "api", "M186 123 L237 123 M402 123 L442 123"],
+    ["The API records the task in PostgreSQL. A notification wakes the leader worker so it can schedule the run.", "worker", "M618 123 L694 123 M726 158 L726 180 L531 180 L531 204"],
+    ["The leader worker dispatches the task to the runner controller. Object storage holds durable files and session state for the run.", "controller", "M443 240 L404 240"],
+    ["The controller provisions an isolated agent runner. Inside it, the agent adapter connects the configured runtime, such as Claude Code, Codex or Hermes.", "runner", "M321 275 L321 348"],
+    ["For a model call, the runner uses the AI gateway. The gateway routes inference to the configured external LLM provider.", "provider", "M494 383 L707 383 M921 383 L1024 383"],
+    ["For a connected tool, the runner calls the MCP proxy. The proxy checks permissions before forwarding the request to the external MCP server.", "tools", "M494 421 L574 421 L574 481 L707 481 M921 481 L1024 481"],
+    ["For a browser action, the runner requests a session through the browser broker. The session runs an isolated browser inside the instance.", "session", "M333 448 L333 554 M427 590 L468 590"],
+    ["When the browser navigates to a website, its traffic passes through the egress proxy. Destination policy determines which websites the browser may reach.", "web", "M658 590 L707 590 M921 590 L1024 590"]
   ],
   run: [
     ["A weekly schedule triggers the data-quality brief. Once the schedule and agent are configured, the task can start without someone opening a chat.", "scope", "M100 119 V174"],
