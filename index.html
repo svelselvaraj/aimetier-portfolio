@@ -7,7 +7,7 @@
 <meta name="description" content="Sundaravel Selvaraj’s engineering case study of AImetier, a platform for running, coordinating and reviewing autonomous AI agents.">
 <title>AImetier — Sundaravel Selvaraj</title>
 <link rel="stylesheet" href="./assets/style.css?v=6082c335b7">
-<script src="./assets/walkthrough.js?v=fb757a65f9" defer></script>
+<script src="./assets/walkthrough.js?v=4bddb2f965" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to case study</a>
@@ -28,10 +28,10 @@
 <div class="atlas">
 <article class="plate" id="instance">
 <div class="plate-head"><h3>Instance components</h3></div>
-<div class="diagram-frame"><div class="paper"><object type="image/svg+xml" data="./assets/instance.svg?v=1b559f02e5" aria-label="AImetier instance with an HTTPS entry point and separate outbound paths for model calls, MCP tools and browser traffic"><a href="./assets/instance.svg?v=1b559f02e5">View component diagram</a></object></div>
+<div class="diagram-frame"><div class="paper"><object type="image/svg+xml" data="./assets/instance.svg?v=bb11789bcd" aria-label="AImetier instance with an HTTPS entry point and separate outbound paths for model calls, MCP tools and browser traffic"><a href="./assets/instance.svg?v=bb11789bcd">View component diagram</a></object></div>
 <div class="controls" hidden><button class="play" type="button" aria-label="Play flow" title="Play flow"></button><button class="next" type="button" aria-label="Next step" title="Next step"></button><button class="zoom" type="button" aria-label="Enlarge diagram" aria-pressed="false" title="Enlarge diagram"></button></div></div>
 <output class="step-caption" aria-live="off"></output>
-<details class="text-map"><summary>Read the component map</summary><p>The HTTPS gateway forwards application requests to the web API. The API signals the leader worker through PostgreSQL notifications. Both services use PostgreSQL, and the API uses object storage for files and attachments. The leader worker dispatches runs to isolated agent runners via the runner controller. Each runner uses its configured adapter. The Gateway groups three components. Model calls use the AI gateway, MCP tool calls require tool permissions, and browser sessions use an egress proxy to reach approved websites.</p></details>
+<details class="text-map"><summary>Read the component map</summary><p>The HTTPS gateway forwards application requests to the web API. The API signals the master worker through PostgreSQL notifications. Both services use PostgreSQL with pgvector, and the API uses object storage for files and attachments. The master worker dispatches runs to isolated agent runners via the runner controller. Each runner uses its configured adapter. The Gateway groups three components. Model calls use the AI gateway, MCP tool calls require tool permissions, and browser sessions use an egress proxy to reach approved websites.</p></details>
 </article>
 <article class="plate" id="run">
 <div class="plate-head"><h3>Autonomous run · A scheduled data-quality brief</h3></div>
