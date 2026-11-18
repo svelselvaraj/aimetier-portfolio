@@ -5,14 +5,14 @@ const tours = {
     ["PostgreSQL signals that work is ready. The leader worker picks up the task in the background while the web API continues serving the portal.", "worker", "M647 122 V198"],
     ["The worker requests a lease for the run. The runner controller holds the Kubernetes permissions needed to provision the execution environment.", "control", "M759 244 H848"],
     ["The controller prepares an isolated runner for the assigned agent. The runner receives a scoped workspace and only the tools permitted for the job.", "task", "M957 285 V334 H706 V376"],
-    ["The configured adapter invokes the model, and approved tools carry out its actions. Run events send progress back to the portal so the operator can follow the work.", "models", "M606 453 H529 V534 H363"]
+    ["The adapter passes the agent its instructions and labels retrieved content as untrusted data. The runtime restricts tool access, and the portal shows the resulting activity.", "models", "M606 453 H529 V534 H363"]
   ],
   run: [
     ["A weekly schedule triggers the data-quality brief. Once the schedule and agent are configured, the task can start without someone opening a chat.", "scope", "M100 119 V174"],
     ["The worker dispatches the brief to the analyst agent. Its assignment determines who owns the output and which budget applies to the run.", "dispatch", "M225 220 H296"],
     ["The analyst retrieves permitted context and uses its approved tools to prepare the brief. Tenant and agent permissions determine which records it can draw on.", "runner", "M514 220 H584"],
-    ["The server checks the evidence attached to this specific run. If a required check fails, the brief cannot advance as verified work.", "proof", "M823 220 H890"],
-    ["After the checks pass, the workflow applies its review policy. A reviewer can approve the brief, request changes, or flag a decision for an operator.", "review", "M989 275 V342"],
+    ["The analyst submits the brief with its supporting validation results. The server checks the recorded outcomes for this run before the task can advance as verified work.", "proof", "M823 220 H890"],
+    ["The reviewer compares the brief with the underlying results. If an anomaly count lacks support, the reviewer can request a correction or escalate the decision to an operator.", "review", "M989 275 V342"],
     ["In this example, sharing the brief requires human approval. The operator can inspect the draft and its review evidence before authorizing release.", "operator", "M990 425 V478"],
     ["Once approved, the workflow can release the brief. The run record keeps the checks, usage and review decision together for the operator to inspect later.", "audit", "M883 514 H650 V430 M539 385 H478"]
   ]

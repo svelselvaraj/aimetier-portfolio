@@ -16,8 +16,8 @@
 <main id="main">
 <section class="opening"><div class="cover shell">
 <div class="lede"><p class="kicker">Independent platform project</p><h1>AImetier</h1>
-<h2>An operating platform for teams of AI agents.</h2>
-<p>I built AImetier as an alternative to Grok Bot and ChatGPT dots for teams that need several agents to share work. Each agent has a role, a budget and a record of the checks behind its decisions.</p>
+<h2>Run a company with a team of autonomous AI agents.</h2>
+<p>I built AImetier as a company-scale alternative to Grok Bot and ChatGPT dots. In the portal, you set goals, reporting lines and budgets. Agents pick up work on a schedule or when a teammate calls on them, hand results to the next specialist, and carry tasks through review to completion. You can follow their decisions and step in when approval is required.</p>
 <a class="cover-link" href="#architecture">Explore the architecture <span aria-hidden="true">↓</span></a></div>
 <figure class="film" id="tour"><video controls muted playsinline preload="metadata" poster="./assets/demo-poster.webp" aria-label="AImetier product tour"><source src="./assets/demo.mp4" type="video/mp4"><a href="./assets/demo.mp4">Download the product film</a></video>
 </figure>
@@ -29,6 +29,10 @@
 <div class="plate-head"><h3>Instance components</h3><a href="./assets/instance.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
 <div class="paper"><object type="image/svg+xml" data="./assets/instance.svg" aria-label="Component diagram of an AImetier Kubernetes instance"><a href="./assets/instance.svg">View component diagram</a></object></div>
 <div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="off"></output></div>
+<section class="guardrails" aria-labelledby="guardrails-title"><h4 id="guardrails-title">Guardrails along the run</h4>
+<dl><div><dt>Portal and API</dt><dd>The session establishes who is acting. Workspace permissions govern which company records that person or agent can use.</dd></div>
+<div><dt>Agent runtime</dt><dd>The runtime labels retrieved material as untrusted data. Tool permissions and the isolated workspace limit what an agent can do with it.</dd></div>
+<div><dt>Completion gate</dt><dd>The server checks the results recorded for this run. Missing or failed required checks keep the task open for follow-up.</dd></div></dl></section>
 <details class="text-map"><summary>Read the component map</summary><p>The workspace portal and the operator console reach the web API through the gateway. WebSocket (WS) carries live updates. Row-level security (RLS) scopes database access. PostgreSQL holds tenant-scoped work and wakes the leader worker. The worker dispatches a run, and the controller provisions isolated compute. Runtime adapters invoke models and approved tools. The browser has a separate session and outbound proxy. Object storage holds durable files and session state.</p></details>
 </article>
 <article class="plate" id="run">
@@ -44,8 +48,10 @@
 <section class="notes" id="engineering"><div class="shell chapter"><div class="section-title"><div><p class="kicker">Multi-agent orchestration</p><h2>How the platform works</h2></div></div>
 <dl class="ledger">
 <div><dt>Isolated execution</dt><dd>The worker schedules the task. A separate controller provisions an isolated runner with a scoped workspace and approved tools. Tenant-level database policies also apply when agents retrieve data.</dd></div>
+<div><dt>Prompt injection guardrails</dt><dd>A retrieved document can contain text that reads like a command. The runtime marks that text as source material, labels instructions by origin and uses the model’s system channel where available. The server independently enforces tool permissions, so text inside a document cannot grant access.</dd></div>
 <div><dt>Short-term context</dt><dd>The active thread carries the conversation and task inputs across turns. The platform assembles the run context from the agent’s instructions, permitted sources and tools. Temporary chat excludes prior conversations.</dd></div>
 <div><dt>Long-term memory</dt><dd>Agents can save a lesson after a run. PostgreSQL and pgvector retrieve relevant lessons on later tasks. New memories are private to the agent by default. Sharing a lesson with a department or company requires an explicit promotion.</dd></div>
+<div><dt>Grounding and hallucination checks</dt><dd>For a weekly quality brief, the analyst can retrieve the underlying validation results and a reviewer can reconcile the draft’s claims against them. For run-bound tasks, the server computes whether the assigned checks passed from their recorded results. A confident summary alone cannot mark the work complete.</dd></div>
 <div id="evaluation"><dt>LLM-as-judge evaluation</dt><dd>In the evaluation suite, deterministic checks screen out structurally invalid results. An LLM judge grades the remaining outputs against a rubric. Regression tests compare scores by role and work category, so a drop in reviewer quality stays visible.</dd></div>
 <div><dt>Peer review and human approval</dt><dd>A reviewer agent can approve, request changes, hold or escalate. A configured approval gate pauses before an external action such as sending a message. An unresolved reviewer verdict can still block the write after human review.</dd></div>
 <div><dt>Run observability</dt><dd>Run events link an agent’s activity to its checks, usage and review decision. Operators can trace a slow response from the first visible progress update back to runner startup or a missed warm runner.</dd></div>
