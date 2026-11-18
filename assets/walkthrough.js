@@ -1,13 +1,13 @@
 const tours = {
   instance: [
-    ["The workspace portal and operator console enter the instance through the HTTPS gateway, which forwards requests to the web API.", "api", "M186 123 L237 123 M402 123 L442 123"],
-    ["The API records the task in PostgreSQL. A notification wakes the leader worker so it can schedule the run.", "worker", "M618 123 L694 123 M726 158 L726 180 L531 180 L531 204"],
-    ["The leader worker dispatches the task to the runner controller. Object storage holds durable files and session state for the run.", "controller", "M443 240 L404 240"],
-    ["The controller provisions an isolated agent runner. Inside it, the agent adapter connects the configured runtime, such as Claude Code, Codex or Hermes.", "runner", "M321 275 L321 348"],
-    ["For a model call, the runner uses the AI gateway. The gateway routes inference to the configured external LLM provider.", "provider", "M494 383 L707 383 M921 383 L1024 383"],
-    ["For a connected tool, the runner calls the MCP proxy. The proxy checks permissions before forwarding the request to the external MCP server.", "tools", "M494 421 L574 421 L574 481 L707 481 M921 481 L1024 481"],
-    ["For a browser action, the runner requests a session through the browser broker. The session runs an isolated browser inside the instance.", "session", "M333 448 L333 554 M427 590 L468 590"],
-    ["When the browser navigates to a website, its traffic passes through the egress proxy. Destination policy determines which websites the browser may reach.", "web", "M658 590 L707 590 M921 590 L1024 590"]
+    ["The workspace portal and operator console enter the instance through the HTTPS gateway, which forwards requests to the web API.", "api", "M188 120 L232 120 M393 120 L435 120"],
+    ["The API signals the leader worker when work is ready. The arrow shows the logical handoff, carried by PostgreSQL notifications in the split deployment.", "worker", "M585 120 L764 120"],
+    ["Both the web API and the leader worker access PostgreSQL. The API also uses object storage for files and attachments. Dashed lines show storage dependencies.", "postgres", "M549 155 L549 180 L593 180 L593 207 M812 155 L812 180 L688 180 L688 207"],
+    ["The leader worker dispatches work to isolated agent runners. Each runner uses its configured adapter, and the stack represents capacity for concurrent runs.", "runner", "M893 155 L893 295 L530 295 L530 337"],
+    ["For inference, the agent runner calls the AI gateway. The gateway routes the request to the model provider configured for the workspace.", "provider", "M668 393 L769 393 M986 393 L1053 393"],
+    ["For a connected tool call, the platform checks the agent’s permissions before forwarding its request to the authorised MCP server.", "tools", "M655 430 L700 430 L700 468 L769 468 M986 468 L1053 468"],
+    ["When an agent needs a browser, the browser broker opens an isolated session. The runner can use that session to perform the browser action.", "session", "M523 456 L523 518"],
+    ["The browser session sends outbound traffic through the egress proxy. Its destination policy controls which websites the session can reach.", "web", "M655 554 L769 554 M986 554 L1053 554"]
   ],
   run: [
     ["A weekly schedule triggers the data-quality brief. Once the schedule and agent are configured, the task can start without someone opening a chat.", "scope", "M100 119 V174"],
