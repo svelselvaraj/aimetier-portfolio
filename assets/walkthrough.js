@@ -2,7 +2,7 @@ const tours = {
   instance: [
     ["The workspace portal and operator console enter the instance through the HTTPS gateway, which forwards requests to the web API.", "api", "M188 120 L232 120 M393 120 L450 120"],
     ["The API signals the master worker when work is ready. The arrow shows the logical handoff, carried by PostgreSQL notifications in the split deployment.", "worker", "M525.5 155 L525.5 217"],
-    ["Both the web API and the master worker access PostgreSQL, where pgvector supports memory retrieval. The API also uses object storage for files and attachments. Dashed lines show storage dependencies.", "postgres", "M600 136 L841 136 L841 151 M634 249 L841 249 L841 223"],
+    ["Both the web API and the master worker access PostgreSQL, where pgvector supports memory retrieval. The API also uses object storage for files and attachments. Dashed lines show storage dependencies.", "postgres", "M600 136 L686 136 L686 172 L771 172 M634 249 L703 249 L703 203 L771 203"],
     ["The master worker dispatches work to isolated agent runners. Each runner uses its configured adapter, and the stack represents capacity for concurrent runs.", "runner", "M525.5 288 L525.5 337"],
     ["For inference, the agent runner calls the AI gateway. The gateway routes the request to the model provider configured for the workspace.", "provider", "M668 393 L769 393 M986 393 L1053 393"],
     ["For a connected tool call, the platform checks the agent’s permissions before forwarding its request to the authorised MCP server.", "tools", "M655 430 L700 430 L700 468 L769 468 M986 468 L1053 468"],
