@@ -1,24 +1,24 @@
 const tours = {
   instance: [
-    ["The portal opens a workspace request.", "gateway", "M222 84 H295"],
-    ["The web API resolves the workspace and records the task.", "web", "M488 86 H550"],
-    ["A database notification wakes the leader worker.", "worker", "M647 122 V198"],
-    ["The worker requests an execution lease.", "control", "M759 244 H848"],
-    ["The controller provisions an isolated runner.", "task", "M957 285 V334 H706 V376"],
-    ["The runner uses the model and tools selected for this job.", "models", "M606 453 H529 V534 H363"]
+    ["A request from the workspace portal reaches the HTTPS gateway. The gateway routes it to the web API, where the platform can check who is making the request.", "gateway", "M222 84 H295"],
+    ["The API resolves the user’s company and records the task in PostgreSQL. Row-level policies keep the task within that company’s workspace.", "web", "M488 86 H550"],
+    ["PostgreSQL signals that work is ready. The leader worker picks up the task in the background while the web API continues serving the portal.", "worker", "M647 122 V198"],
+    ["The worker requests a lease for the run. The runner controller holds the Kubernetes permissions needed to provision the execution environment.", "control", "M759 244 H848"],
+    ["The controller prepares an isolated runner for the assigned agent. The runner receives a scoped workspace and only the tools permitted for the job.", "task", "M957 285 V334 H706 V376"],
+    ["The configured adapter invokes the model, and approved tools carry out its actions. Run events send progress back to the portal so the operator can follow the work.", "models", "M606 453 H529 V534 H363"]
   ],
   run: [
-    ["A schedule starts the weekly quality brief.", "scope", "M100 119 V174"],
-    ["The worker assigns the analyst and applies its budget.", "dispatch", "M225 220 H296"],
-    ["The runner uses scoped context and approved tools.", "runner", "M514 220 H584"],
-    ["The server checks the evidence attached to this run.", "proof", "M823 220 H890"],
-    ["Passing checks advance the brief to its review policy.", "review", "M989 275 V342"],
-    ["This example requires an operator to approve release.", "operator", "M990 425 V478"],
-    ["Approval releases the result and preserves the checks and usage.", "audit", "M883 514 H650 V430 M539 385 H478"]
+    ["A weekly schedule triggers the data-quality brief. Once the schedule and agent are configured, the task can start without someone opening a chat.", "scope", "M100 119 V174"],
+    ["The worker dispatches the brief to the analyst agent. Its assignment determines who owns the output and which budget applies to the run.", "dispatch", "M225 220 H296"],
+    ["The analyst retrieves permitted context and uses its approved tools to prepare the brief. Tenant and agent permissions determine which records it can draw on.", "runner", "M514 220 H584"],
+    ["The server checks the evidence attached to this specific run. If a required check fails, the brief cannot advance as verified work.", "proof", "M823 220 H890"],
+    ["After the checks pass, the workflow applies its review policy. A reviewer can approve the brief, request changes, or flag a decision for an operator.", "review", "M989 275 V342"],
+    ["In this example, sharing the brief requires human approval. The operator can inspect the draft and its review evidence before authorizing release.", "operator", "M990 425 V478"],
+    ["Once approved, the workflow can release the brief. The run record keeps the checks, usage and review decision together for the operator to inspect later.", "audit", "M883 514 H650 V430 M539 385 H478"]
   ]
 };
 const panels = [...document.querySelectorAll(".plate")];
-const tabs = [...document.querySelectorAll(".views a")];
+const stepDuration = 9500;
 const ns = "http://www.w3.org/2000/svg";
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const video = document.querySelector(".film video");
@@ -75,7 +75,7 @@ function initialise(panel) {
   let timer;
   let visible = false;
   let manualPause = reduced.matches;
-  let remaining = 3000;
+  let remaining = stepDuration;
   let startedAt = 0;
   const drawing = () => object.contentDocument?.documentElement;
   function pause() {
@@ -100,7 +100,7 @@ function initialise(panel) {
     startedAt = performance.now();
     timer = setTimeout(() => {
       timer = undefined;
-      remaining = 3000;
+      remaining = stepDuration;
       step();
       sync();
     }, remaining);
@@ -125,47 +125,13 @@ function initialise(panel) {
     controls.querySelector("output").setAttribute("aria-live", "polite");
     pause();
     step();
-    remaining = 3000;
+    remaining = stepDuration;
   });
   new IntersectionObserver(entries => {
     visible = entries[0].isIntersecting;
     sync();
   }, {threshold: 0.15}).observe(object);
   document.addEventListener("visibilitychange", sync);
-  panel.addEventListener("viewchange", sync);
   reduced.addEventListener("change", () => { manualPause = reduced.matches; sync(); });
 }
-function select(index) {
-  tabs.forEach((tab,i) => {
-    tab.setAttribute("aria-selected", String(i === index));
-    tab.tabIndex = i === index ? 0 : -1;
-    panels[i].hidden = i !== index;
-    panels[i].dispatchEvent(new Event("viewchange"));
-  });
-}
-document.querySelector(".views").setAttribute("role","tablist");
-tabs.forEach((tab,i) => {
-  const panel = panels[i];
-  tab.id = "view-" + panel.id;
-  tab.setAttribute("role","tab");
-  tab.setAttribute("aria-controls",panel.id);
-  panel.setAttribute("role","tabpanel");
-  panel.setAttribute("aria-labelledby",tab.id);
-  tab.addEventListener("click", e => {
-    e.preventDefault(); select(i); history.replaceState(null,"",tab.hash);
-  });
-  tab.addEventListener("keydown", e => {
-    const positions = {ArrowLeft:1-i, ArrowRight:1-i, Home:0, End:tabs.length-1};
-    if (!(e.key in positions)) return;
-    e.preventDefault();
-    const next = positions[e.key];
-    select(next); tabs[next].focus(); history.replaceState(null,"",tabs[next].hash);
-  });
-  initialise(panel);
-});
-function readHash() {
-  const i = tabs.findIndex(tab => tab.hash === location.hash);
-  select(i < 0 ? 0 : i);
-}
-readHash();
-window.addEventListener("hashchange",readHash);
+panels.forEach(initialise);

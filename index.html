@@ -23,17 +23,16 @@
 </figure>
 </div></section>
 <section class="shell chapter" id="architecture">
-<div class="section-title"><div><p class="kicker">System design</p><h2>Inside an AImetier instance</h2></div><p>Start with the components. Switch to the run trace to follow a scheduled task through review.</p></div>
+<div class="section-title"><div><p class="kicker">System design</p><h2>Inside an AImetier instance</h2></div></div>
 <div class="atlas">
-<nav class="views" aria-label="Architecture views"><a href="#instance">Instance components</a><a href="#run">Autonomous run</a></nav>
 <article class="plate" id="instance">
-<div class="plate-head"><h3>Kubernetes deployment topology</h3><a href="./assets/instance.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
+<div class="plate-head"><h3>Instance components</h3><a href="./assets/instance.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
 <div class="paper"><object type="image/svg+xml" data="./assets/instance.svg" aria-label="Component diagram of an AImetier Kubernetes instance"><a href="./assets/instance.svg">View component diagram</a></object></div>
 <div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="off"></output></div>
 <details class="text-map"><summary>Read the component map</summary><p>The workspace portal and the operator console reach the web API through the gateway. WebSocket (WS) carries live updates. Row-level security (RLS) scopes database access. PostgreSQL holds tenant-scoped work and wakes the leader worker. The worker dispatches a run, and the controller provisions isolated compute. Runtime adapters invoke models and approved tools. The browser has a separate session and outbound proxy. Object storage holds durable files and session state.</p></details>
 </article>
 <article class="plate" id="run">
-<div class="plate-head"><h3>A scheduled data-quality brief</h3><a href="./assets/system.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
+<div class="plate-head"><h3>Autonomous run · A scheduled data-quality brief</h3><a href="./assets/system.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
 <div class="paper"><object type="image/svg+xml" data="./assets/system.svg" aria-label="Agent run from scheduling through verification, with rework and operator approval branches"><a href="./assets/system.svg">View run diagram</a></object></div>
 <div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="off"></output></div>
 <details class="text-map"><summary>Read the run trace</summary><p>A schedule wakes the assigned agent. The worker loads permitted context and the budget. The runner prepares the brief using its configured tools. The server verifies the checks for this run. Work can return for revision, finish under policy, or wait for operator approval. Usage and the review decision remain attached to the run.</p></details>
@@ -42,7 +41,7 @@
 <section class="team chapter shell" id="organisation"><div class="section-title"><div><p class="kicker">Team workspace</p><h2>Every task has an owner.</h2></div><p>The same agent team appears as a virtual office and as a reporting structure. Open the chart to inspect individual roles.</p></div>
 <div class="exhibits"><figure id="roster"><a href="./assets/screens/roster.webp"><img loading="lazy" width="1800" height="947" src="./assets/screens/roster.webp" alt="AImetier organisation chart showing the CEO and specialist teams across engineering, marketing, operations and finance"></a><figcaption><strong>Organisation chart</strong><a href="./assets/screens/roster.webp">Full size <span class="out" aria-hidden="true"></span></a></figcaption></figure>
 <figure><a href="./assets/screens/office.webp"><img loading="lazy" width="1620" height="1380" src="./assets/screens/office.webp" alt="AImetier virtual office with agents grouped at desks by team"></a><figcaption><strong>Virtual office</strong><a href="./assets/screens/office.webp">Full size <span class="out" aria-hidden="true"></span></a></figcaption></figure></div></section>
-<section class="notes" id="engineering"><div class="shell chapter"><div class="section-title"><div><p class="kicker">Multi-agent orchestration</p><h2>How the platform is secure</h2></div></div>
+<section class="notes" id="engineering"><div class="shell chapter"><div class="section-title"><div><p class="kicker">Multi-agent orchestration</p><h2>How the platform works</h2></div></div>
 <dl class="ledger">
 <div><dt>Isolated execution</dt><dd>The worker schedules the task. A separate controller provisions an isolated runner with a scoped workspace and approved tools. Tenant-level database policies also apply when agents retrieve data.</dd></div>
 <div><dt>Short-term context</dt><dd>The active thread carries the conversation and task inputs across turns. The platform assembles the run context from the agent’s instructions, permitted sources and tools. Temporary chat excludes prior conversations.</dd></div>
