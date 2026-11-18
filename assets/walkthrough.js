@@ -6,7 +6,7 @@ const tours = {
     ["The master worker dispatches work to isolated agent runners. Each runner uses its configured adapter, and the stack represents capacity for concurrent runs.", "runner", "M525.5 288 L525.5 337"],
     ["For inference, the agent runner calls the AI gateway. The gateway routes the request to the model provider configured for the workspace.", "provider", "M668 393 L769 393 M986 393 L1053 393"],
     ["For a connected tool call, the platform checks the agent’s permissions before forwarding its request to the authorised MCP server.", "tools", "M655 430 L700 430 L700 468 L769 468 M986 468 L1053 468"],
-    ["When an agent needs a browser, the browser broker opens an isolated session. The runner can use that session to perform the browser action.", "session", "M523 456 L523 518"],
+    ["The runner asks the browser broker to launch a browser session. The agent uses that isolated session to carry out its browser action.", "session", "M523 456 L523 518"],
     ["The browser session sends outbound traffic through the egress proxy. Its destination policy controls which websites the session can reach.", "web", "M655 554 L769 554 M986 554 L1053 554"]
   ],
   run: [
@@ -47,13 +47,13 @@ function initialise(panel) {
     index = (index + 1) % steps.length;
     const [caption, id, path] = steps[index];
     doc.querySelector(".lit")?.classList.remove("lit");
-    doc.getElementById("signal")?.remove();
+    doc.getElementById("tour-signal")?.remove();
     const target = doc.getElementById(id);
     target.classList.add("lit");
     output.textContent = (index + 1) + " / " + steps.length + "   " + caption;
     if (!reduced.matches) {
       const dot = doc.createElementNS(ns, "circle");
-      dot.id = "signal";
+      dot.id = "tour-signal";
       dot.setAttribute("r","6");
       dot.setAttribute("fill","#164eae");
       dot.setAttribute("stroke","white");
@@ -117,6 +117,7 @@ function initialise(panel) {
     doc.documentElement.append(style);
     doc.addEventListener("click", toggle);
     controls.hidden = false;
+    if (reduced.matches && index < 0) step();
     sync();
   }
   object.addEventListener("load", ready);
