@@ -15,20 +15,37 @@
     <div class="wrap topbar-inner">
       <a class="identity" href="#top"><span class="monogram" aria-hidden="true">SS</span><span>Sundaravel Selvaraj <small>Senior Data / AI Engineer</small></span></a>
       <nav aria-label="Main navigation">
-        <a href="#walkthrough">Walkthrough</a>
+        <a href="#tour">Product tour</a>
         <a href="#architecture">Architecture</a>
-        <a class="contact-link" href="https://www.linkedin.com/in/sundara-vel-selvaraj/">LinkedIn <span aria-hidden="true" class="outbound"></span></a>
+        <a href="#engineering">Engineering</a>
+        <a class="contact-link" href="https://app.aimetier.com/">Open AImetier <span aria-hidden="true" class="outbound"></span></a>
       </nav>
     </div>
   </header>
   <main id="main" class="wrap" tabindex="-1">
     <section class="hero" aria-labelledby="title">
-      <p class="eyebrow">Engineering case study</p>
-      <h1 id="title">AImetier<span>.</span></h1>
-      <p class="subtitle">A control plane for AI agent teams</p>
-      <p class="intro">Coordinate agents across model providers, give them the context and tools to do the work, and tie completion to review evidence.</p>
+      <div class="hero-copy">
+        <p class="eyebrow">Personal project &nbsp;/&nbsp; AI platform engineering</p>
+        <h1 id="title">AImetier<span>.</span></h1>
+        <p class="subtitle">A control plane for AI agent teams.</p>
+        <p class="intro">I built AImetier to coordinate AI agents and give their operators a record of who acted, what a run cost, and which evidence justified approval.</p>
+        <div class="hero-actions"><a class="primary" href="#tour">Explore the product <span aria-hidden="true">↓</span></a><a href="#engineering">Engineering decisions</a></div>
+      </div>
+      <figure class="office">
+        <a href="./assets/screens/office.webp" aria-label="View the full virtual office screenshot"><img src="./assets/screens/office.webp" width="1620" height="1380" alt="Four rooms in Hyperclip’s virtual office, with agents seated at their team desks"></a>
+        <figcaption><strong>The virtual office</strong><span>Hyperclip · Workspace view</span></figcaption>
+      </figure>
     </section>
-
+    <section id="tour" class="tour" aria-labelledby="tour-title">
+      <p class="eyebrow">Inside Hyperclip</p>
+      <h2 id="tour-title">The agent organisation chart</h2>
+      <div class="tour-layout">
+        <figure class="screen" id="roster">
+          <a class="screen-image" href="./assets/screens/roster.webp" aria-label="Open full organisation chart screenshot"><img src="./assets/screens/roster.webp" width="1800" height="947" alt="An org chart with the CEO above teams of agents grouped by function"></a>
+          <figcaption><div><h3>Assign responsibility before dispatch</h3><p>The organisation chart groups agents by reporting line. An operator can see who owns engineering, marketing, operations and finance before assigning work.</p></div><a href="./assets/screens/roster.webp">Full image</a></figcaption>
+        </figure>
+      </div>
+    </section>
     <section class="workspace" id="walkthrough" aria-labelledby="walkthrough-title">
       <header class="workspace-header">
         <div class="workspace-title"><span class="logo" aria-hidden="true">A</span><div><h2 id="walkthrough-title">Run walkthrough</h2><p>Weekly data quality brief</p></div></div>
@@ -66,7 +83,7 @@
         <article id="evaluation" class="step">
           <div class="thread">
             <div class="step-heading"><p class="context">Peer review</p><h3>Evaluate the draft against a rubric</h3></div>
-            <div class="message"><span class="avatar reviewer" aria-hidden="true">R</span><div><b>Reviewer agent</b><p>The anomaly counts reconcile. The brief includes source links and calls out the remaining issue.</p></div></div>
+            <div class="message"><span class="avatar reviewer" aria-hidden="true">R</span><div><b>Reviewer agent</b><p>The source lists three failed checks. The draft accounts for all three and keeps the open anomaly visible to the operator.</p></div></div>
             <div class="event"><span aria-hidden="true">✓</span><div><b>Review evidence recorded</b><p>The platform links the review result to this run.</p></div></div>
           </div>
           <div class="inspector"><p class="context">Run inspector</p><h4>Evaluation evidence</h4><dl><div><dt>Criteria</dt><dd>Accuracy, traceability, unresolved issues</dd></div><div><dt>Result</dt><dd>Peer review passed</dd></div><div><dt>Scope</dt><dd>Evidence attached to the run</dd></div></dl></div>
@@ -85,7 +102,7 @@
 
     <section class="architecture" id="architecture" aria-labelledby="architecture-title">
       <p class="eyebrow">Architecture</p>
-      <h2 id="architecture-title">What makes the run possible</h2>
+      <h2 id="architecture-title">The path of a run</h2>
       <figure class="system-map" aria-labelledby="map-title">
         <figcaption><span id="map-title">Agent run architecture</span><button class="replay" type="button" hidden>Replay flow <span aria-hidden="true">↻</span></button></figcaption>
         <ol class="flow">
@@ -100,13 +117,37 @@
         </ol>
         <p class="map-note"><span aria-hidden="true">⊙</span> Run events, costs, and review decisions feed the audit trail.</p>
       </figure>
-      <div class="cards">
-        <article><span aria-hidden="true">⇄</span><h3>Model and provider adapters</h3><p>A common runtime interface dispatches runs across supported model providers and collects usage and cost events.</p></article>
-        <article><span aria-hidden="true">→</span><h3>Agent coordination</h3><p>Roles and task ownership define who does the work. Scheduled and event-driven workers dispatch tasks and support agent-to-agent handoffs (A2A).</p></article>
-        <article><span aria-hidden="true">≋</span><h3>Conversation and memory</h3><p>Threads capture user context. PostgreSQL and pgvector support semantic recall across runs, scoped to the agent by default.</p></article>
-        <article><span aria-hidden="true">⌘</span><h3>Tools and skills</h3><p>Configured tools give agents access to approved services, including integrations through the Model Context Protocol (MCP). Reusable skills carry task instructions across runs.</p></article>
-        <article><span aria-hidden="true">✓</span><h3>Evaluation and approvals</h3><p>Rubrics guide peer review. The server requires evidence tied to the run before completion, and workflows can pause for human approval.</p></article>
-        <article><span aria-hidden="true">◇</span><h3>Operational controls</h3><p>Scoped budgets set warning and hard-stop thresholds. Audit records and company-level data boundaries support oversight.</p></article>
+    </section>
+    <section class="decisions" id="engineering" aria-labelledby="engineering-title">
+      <header><p class="eyebrow">Engineering decisions</p>
+        <h2 id="engineering-title">Operating an agent platform</h2>
+        <p>Six decisions behind the walkthrough, and the implementation evidence for each.</p>
+      </header>
+      <div class="decision-grid">
+        <article><p class="discipline">Architecture</p><h3>Keep the portal responsive while agents work</h3>
+          <p>Hyperclip and the operator console share one API. Background workers dispatch tasks to agent runners. A thread carries the conversation, while PostgreSQL and pgvector support scoped recall across runs.</p>
+          <details><summary>Follow the data</summary><p>A request enters through the portal. A worker assigns the task, the runner invokes its adapter, and run events carry progress back to the interface. The operator can inspect the result from the same thread.</p></details>
+        </article>
+        <article><p class="discipline">Security</p><h3>Give every action a workspace boundary</h3>
+          <p>The portal requires a resolved company before it opens workspace routes. Role permissions govern privileged operations. Database row-level security adds a second boundary around company data.</p>
+          <details><summary>Inspect the boundary</summary><p>Cross-company isolation tests exercise the database policies. When the portal cannot resolve permissions, it restricts access. Client telemetry records route categories and timings and omits message text and filenames.</p></details>
+        </article>
+        <article><p class="discipline">Evaluation</p><h3>Catch a regression in one agent role</h3>
+          <p>A higher overall score can hide a weaker reviewer. The offline evaluation suite compares protected groups of cases against their own baselines, grouped by agent role and work category.</p>
+          <details><summary>Inspect the release check</summary><p>CI exercises a clean baseline, a seeded regression, and missing baseline coverage. A regression in a protected group or missing evidence for that group fails the check. Separate behavior cases cover approvals and task conflicts.</p></details>
+        </article>
+        <article><p class="discipline">Observability</p><h3>Measure the wait a user experiences</h3>
+          <p>The chat dashboard tracks the 95th-percentile time to first visible progress alongside cold-start duration and warm-runner misses. Those signals help an operator locate the delay before changing capacity.</p>
+          <details><summary>Walk through triage</summary><p>For a slow first response, the runbook starts with the sample count and alert window. It then compares time spent starting a runner with warm-runner miss reasons and gives operators a rollback path.</p></details>
+        </article>
+        <article><p class="discipline">Cloud portability</p><h3>Put cloud-specific choices behind contracts</h3>
+          <p>AWS hosts the documented portal deployment. Azure and Google Cloud infrastructure definitions expose common outputs for PostgreSQL, object storage, identity and registry configuration.</p>
+          <details><summary>Inspect deployment scope</summary><p>The storage interface has implementations for Amazon S3 and Azure Blob Storage. Terraform validation checks the Azure and Google Cloud configurations. A successful infrastructure validation establishes configuration coverage only.</p></details>
+        </article>
+        <article><p class="discipline">Adapter portability</p><h3>Change the runner and keep the workflow</h3>
+          <p>A registry dispatches execution to adapters such as Claude Code, Codex and Gemini. Task ownership, approval checkpoints and the review record stay in the control plane.</p>
+          <details><summary>Inspect the division of work</summary><p>The adapter handles its runtime’s invocation and translates its results into the shared execution format. The platform can then associate usage and cost with the run and apply the agent’s configured budget.</p></details>
+        </article>
       </div>
     </section>
   </main>
