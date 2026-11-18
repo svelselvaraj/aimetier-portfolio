@@ -12,7 +12,7 @@ header,.opening{background:#101724;color:#f7f8fc}.bar{min-height:74px;display:fl
 .controls .zoom{display:none}
 @media(max-width:850px){.paper object{min-width:0}.enlarged .paper object{min-width:820px}.controls .zoom{display:inline-block}}
 .guardrails{margin:20px 0 8px;padding:16px 0;border-block:1px solid var(--line)}
-.guardrails h4{margin:0 0 12px;font-size:1rem}
+.guardrails h3{margin:0 0 12px;font-size:1rem}
 .guardrails dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .guardrails dt{font-weight:650;color:var(--blue);font-size:.88rem}
 .guardrails dd{margin-top:4px;font-size:.9rem;color:var(--muted);line-height:1.55}
