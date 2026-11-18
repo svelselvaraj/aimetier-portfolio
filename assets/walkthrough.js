@@ -5,7 +5,9 @@ const tours = {
     ["PostgreSQL signals that work is ready. The leader worker picks up the task in the background while the web API continues serving the portal.", "worker", "M647 122 V198"],
     ["The worker requests a lease for the run. The runner controller holds the Kubernetes permissions needed to provision the execution environment.", "control", "M759 244 H848"],
     ["The controller prepares an isolated runner for the assigned agent. The runner receives a scoped workspace and only the tools permitted for the job.", "task", "M957 285 V334 H706 V376"],
-    ["The adapter passes the agent its instructions and labels retrieved content as untrusted data. The runtime restricts tool access, and the portal shows the resulting activity.", "models", "M606 453 H529 V534 H363"]
+    ["The runner uses its configured agent adapter. Claude Code, Codex, Gemini and Hermes are examples of runtimes that can participate in the same orchestration flow.", "route-adapter", "M606 453 H529 V534 H363"],
+    ["For inference, the AI gateway forwards the adapter’s request to the configured model. The workspace policy determines the model group and available fallback order.", "route-model", "M183 578 V623 H371 M571 623 H701"],
+    ["When the agent requests a connected tool, the MCP proxy checks its permissions and forwards the call to the workspace’s configured MCP server.", "route-tools", "M183 623 V700 H371 M571 700 H701"]
   ],
   run: [
     ["A weekly schedule triggers the data-quality brief. Once the schedule and agent are configured, the task can start without someone opening a chat.", "scope", "M100 119 V174"],
