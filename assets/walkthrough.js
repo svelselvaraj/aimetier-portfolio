@@ -1,9 +1,9 @@
 const tours = {
   instance: [
     ["The workspace portal and operator console enter the instance through the HTTPS gateway, which forwards requests to the web API.", "api", "M188 120 L232 120 M393 120 L435 120"],
-    ["The API signals the leader worker when work is ready. The arrow shows the logical handoff, carried by PostgreSQL notifications in the split deployment.", "worker", "M585 120 L764 120"],
-    ["Both the web API and the leader worker access PostgreSQL. The API also uses object storage for files and attachments. Dashed lines show storage dependencies.", "postgres", "M549 155 L549 180 L593 180 L593 207 M812 155 L812 180 L688 180 L688 207"],
-    ["The leader worker dispatches work to isolated agent runners. Each runner uses its configured adapter, and the stack represents capacity for concurrent runs.", "runner", "M893 155 L893 295 L530 295 L530 337"],
+    ["The API signals the leader worker when work is ready. The arrow shows the logical handoff, carried by PostgreSQL notifications in the split deployment.", "worker", "M522 155 L522 217"],
+    ["Both the web API and the leader worker access PostgreSQL. The API also uses object storage for files and attachments. Dashed lines show storage dependencies.", "postgres", "M585 135 L747 135 L747 237 L771 237 M723 268 L771 268"],
+    ["The leader worker dispatches work to isolated agent runners. Each runner uses its configured adapter, and the stack represents capacity for concurrent runs.", "runner", "M531 288 L531 337"],
     ["For inference, the agent runner calls the AI gateway. The gateway routes the request to the model provider configured for the workspace.", "provider", "M668 393 L769 393 M986 393 L1053 393"],
     ["For a connected tool call, the platform checks the agent’s permissions before forwarding its request to the authorised MCP server.", "tools", "M655 430 L700 430 L700 468 L769 468 M986 468 L1053 468"],
     ["When an agent needs a browser, the browser broker opens an isolated session. The runner can use that session to perform the browser action.", "session", "M523 456 L523 518"],
