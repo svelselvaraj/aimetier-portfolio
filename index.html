@@ -17,10 +17,10 @@
 <section class="opening"><div class="cover shell">
 <div class="lede"><p class="kicker">Independent platform project</p><h1>AImetier</h1>
 <h2>An operating platform for teams of AI agents.</h2>
-<p>I built AImetier so a team can assign recurring work to agents, give each one a budget and tools, and inspect the evidence behind a completed task.</p>
+<p>I built AImetier as an alternative to Grok Bot and ChatGPT dots for teams that need several agents to share work. Each agent has a role, a budget and a record of the checks behind its decisions.</p>
 <a class="cover-link" href="#architecture">Explore the architecture <span aria-hidden="true">↓</span></a></div>
-<figure class="film" id="tour"><video controls playsinline preload="metadata" poster="./assets/demo-poster.webp" aria-label="Hyperclip product demonstration" aria-describedby="film-desc"><source src="./assets/demo.mp4" type="video/mp4"><a href="./assets/demo.mp4">Download the product film</a></video>
-<figcaption id="film-desc"><strong>Hyperclip in use</strong><span>Team roster, task board and chat &nbsp;·&nbsp; 12 sec</span></figcaption></figure>
+<figure class="film" id="tour"><video controls muted playsinline preload="metadata" poster="./assets/demo-poster.webp" aria-label="AImetier product tour"><source src="./assets/demo.mp4" type="video/mp4"><a href="./assets/demo.mp4">Download the product film</a></video>
+</figure>
 </div></section>
 <section class="shell chapter" id="architecture">
 <div class="section-title"><div><p class="kicker">System design</p><h2>Inside an AImetier instance</h2></div><p>Start with the components. Switch to the run trace to follow a scheduled task through review.</p></div>
@@ -29,29 +29,29 @@
 <article class="plate" id="instance">
 <div class="plate-head"><h3>Kubernetes deployment topology</h3><a href="./assets/instance.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
 <div class="paper"><object type="image/svg+xml" data="./assets/instance.svg" aria-label="Component diagram of an AImetier Kubernetes instance"><a href="./assets/instance.svg">View component diagram</a></object></div>
-<div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="polite"></output></div>
-<div class="map-foot"><span>Portable Helm profile · The AWS reference environment runs on ECS.</span><a href="./assets/instance.excalidraw" download>Editable drawing ↓</a></div>
-<details class="text-map"><summary>Read the component map</summary><p>Hyperclip and the operator console reach the web API through the gateway. WebSocket (WS) carries live updates. Row-level security (RLS) scopes database access. PostgreSQL holds tenant-scoped work and wakes the leader worker. The worker dispatches a run, and the controller provisions isolated compute. Runtime adapters invoke models and approved tools. The browser has a separate session and outbound proxy. Object storage holds durable files and session state.</p></details>
+<div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="off"></output></div>
+<details class="text-map"><summary>Read the component map</summary><p>The workspace portal and the operator console reach the web API through the gateway. WebSocket (WS) carries live updates. Row-level security (RLS) scopes database access. PostgreSQL holds tenant-scoped work and wakes the leader worker. The worker dispatches a run, and the controller provisions isolated compute. Runtime adapters invoke models and approved tools. The browser has a separate session and outbound proxy. Object storage holds durable files and session state.</p></details>
 </article>
 <article class="plate" id="run">
 <div class="plate-head"><h3>A scheduled data-quality brief</h3><a href="./assets/system.svg">Full diagram <span class="out" aria-hidden="true"></span></a></div>
 <div class="paper"><object type="image/svg+xml" data="./assets/system.svg" aria-label="Agent run from scheduling through verification, with rework and operator approval branches"><a href="./assets/system.svg">View run diagram</a></object></div>
-<div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="polite"></output></div>
-<div class="map-foot"><span>Illustrative task · Configured checks decide whether work can advance.</span><a href="./assets/system.excalidraw" download>Editable drawing ↓</a></div>
+<div class="controls" hidden><button class="play" type="button">Play flow</button><button class="next" type="button">Next step</button><output aria-live="off"></output></div>
 <details class="text-map"><summary>Read the run trace</summary><p>A schedule wakes the assigned agent. The worker loads permitted context and the budget. The runner prepares the brief using its configured tools. The server verifies the checks for this run. Work can return for revision, finish under policy, or wait for operator approval. Usage and the review decision remain attached to the run.</p></details>
 </article></div>
 </section>
-<section class="team chapter shell" id="organisation"><div class="section-title"><div><p class="kicker">Inside Hyperclip</p><h2>Every task has an owner.</h2></div><p>The same agent team appears as a virtual office and as a reporting structure. Open the chart to inspect individual roles.</p></div>
+<section class="team chapter shell" id="organisation"><div class="section-title"><div><p class="kicker">Team workspace</p><h2>Every task has an owner.</h2></div><p>The same agent team appears as a virtual office and as a reporting structure. Open the chart to inspect individual roles.</p></div>
 <div class="exhibits"><figure id="roster"><a href="./assets/screens/roster.webp"><img loading="lazy" width="1800" height="947" src="./assets/screens/roster.webp" alt="AImetier organisation chart showing the CEO and specialist teams across engineering, marketing, operations and finance"></a><figcaption><strong>Organisation chart</strong><a href="./assets/screens/roster.webp">Full size <span class="out" aria-hidden="true"></span></a></figcaption></figure>
-<figure><a href="./assets/screens/office.webp"><img loading="lazy" width="1620" height="1380" src="./assets/screens/office.webp" alt="Hyperclip virtual office with agents grouped at desks by team"></a><figcaption><strong>Virtual office</strong><a href="./assets/screens/office.webp">Full size <span class="out" aria-hidden="true"></span></a></figcaption></figure></div></section>
-<section class="notes" id="engineering"><div class="shell chapter"><div class="section-title"><div><p class="kicker">Engineering decisions</p><h2>Where the platform draws the line</h2></div></div>
+<figure><a href="./assets/screens/office.webp"><img loading="lazy" width="1620" height="1380" src="./assets/screens/office.webp" alt="AImetier virtual office with agents grouped at desks by team"></a><figcaption><strong>Virtual office</strong><a href="./assets/screens/office.webp">Full size <span class="out" aria-hidden="true"></span></a></figcaption></figure></div></section>
+<section class="notes" id="engineering"><div class="shell chapter"><div class="section-title"><div><p class="kicker">Multi-agent orchestration</p><h2>How the platform is secure</h2></div></div>
 <dl class="ledger">
-<div><dt>Context belongs to a tenant</dt><dd>Access rules filter memory and documents before retrieval ranks them. Database row-level policies enforce the company boundary, which cross-company tests exercise.</dd></div>
-<div><dt>The worker owns orchestration</dt><dd>PostgreSQL signals work across the web and worker tiers. The runner gets a scoped workspace. On Kubernetes, a separate controller holds the credential to create pods.</dd></div>
-<div><dt>Model choice belongs to the workspace</dt><dd>Each company sets its adapter order and model groups. If the primary adapter fails, the policy can select a fallback in the same group. The task keeps its owner, budget and review rules.</dd></div>
-<div id="evaluation"><dt>“Done” requires evidence</dt><dd>The server derives the result from checks attached to the run. Offline evaluation also tests protected groups of cases by role, so an overall average cannot hide a reviewer regression.</dd></div>
-<div><dt>Measure the operator’s wait</dt><dd>Time to first visible progress, cold-start duration and warm-runner misses guide latency triage. Run events connect what the operator saw with what the worker did.</dd></div>
-<div><dt>Keep cloud dependencies explicit</dt><dd>AWS is the documented reference deployment. Azure and Google Cloud Terraform definitions describe alternative infrastructure. The storage interface has S3 and Azure Blob implementations.</dd></div>
+<div><dt>Isolated execution</dt><dd>The worker schedules the task. A separate controller provisions an isolated runner with a scoped workspace and approved tools. Tenant-level database policies also apply when agents retrieve data.</dd></div>
+<div><dt>Short-term context</dt><dd>The active thread carries the conversation and task inputs across turns. The platform assembles the run context from the agent’s instructions, permitted sources and tools. Temporary chat excludes prior conversations.</dd></div>
+<div><dt>Long-term memory</dt><dd>Agents can save a lesson after a run. PostgreSQL and pgvector retrieve relevant lessons on later tasks. New memories are private to the agent by default. Sharing a lesson with a department or company requires an explicit promotion.</dd></div>
+<div id="evaluation"><dt>LLM-as-judge evaluation</dt><dd>In the evaluation suite, deterministic checks screen out structurally invalid results. An LLM judge grades the remaining outputs against a rubric. Regression tests compare scores by role and work category, so a drop in reviewer quality stays visible.</dd></div>
+<div><dt>Peer review and human approval</dt><dd>A reviewer agent can approve, request changes, hold or escalate. A configured approval gate pauses before an external action such as sending a message. An unresolved reviewer verdict can still block the write after human review.</dd></div>
+<div><dt>Run observability</dt><dd>Run events link an agent’s activity to its checks, usage and review decision. Operators can trace a slow response from the first visible progress update back to runner startup or a missed warm runner.</dd></div>
+<div><dt>Adapter-agnostic orchestration</dt><dd>The workflow can use any LLM exposed through a compatible adapter. Each workspace sets its model groups and fallback order. Claude Code, Codex, Gemini and Hermes are examples of supported agent runtimes.</dd></div>
+<div><dt>Cloud-agnostic deployment</dt><dd>The platform has infrastructure definitions for AWS, Azure and Google Cloud. AWS is the documented reference deployment, Azure includes an AKS deployment path, and the Google Cloud configuration is validated in CI.</dd></div>
 </dl></div></section>
 </main><footer class="shell"><div><strong>Sundaravel Selvaraj</strong><p>Senior Data / AI Engineer</p></div><a href="https://www.linkedin.com/in/sundara-vel-selvaraj/">Connect on LinkedIn <span class="out" aria-hidden="true"></span></a></footer>
 </body></html>

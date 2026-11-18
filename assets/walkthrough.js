@@ -21,12 +21,9 @@ const panels = [...document.querySelectorAll(".plate")];
 const tabs = [...document.querySelectorAll(".views a")];
 const ns = "http://www.w3.org/2000/svg";
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-let timer;
-function stop() {
-  clearTimeout(timer);
-  timer = undefined;
-  document.querySelectorAll(".play").forEach(button => { button.textContent = "Play flow"; });
-}
+const video = document.querySelector(".film video");
+if (!reduced.matches) video.play().catch(() => {});
+
 function initialise(panel) {
   const object = panel.querySelector("object");
   const controls = panel.querySelector(".controls");
@@ -75,34 +72,75 @@ function initialise(panel) {
       paper.scrollLeft = box.x + box.width / 2 - paper.clientWidth / 2;
     }
   }
-  function advance() {
-    step();
-    if (index === steps.length - 1) stop();
-    else timer = setTimeout(advance, 3000);
+  let timer;
+  let visible = false;
+  let manualPause = reduced.matches;
+  let remaining = 3000;
+  let startedAt = 0;
+  const drawing = () => object.contentDocument?.documentElement;
+  function pause() {
+    if (timer !== undefined) {
+      clearTimeout(timer);
+      remaining = Math.max(1, remaining - (performance.now() - startedAt));
+      timer = undefined;
+    }
+    drawing()?.pauseAnimations?.();
+    play.textContent = "Play flow";
   }
+  function sync() {
+    if (!visible || panel.hidden || document.hidden || manualPause || controls.hidden) {
+      pause();
+      return;
+    }
+    if (timer !== undefined) return;
+    drawing()?.unpauseAnimations?.();
+    if (index < 0) step();
+    controls.querySelector("output").setAttribute("aria-live", "off");
+    play.textContent = "Pause";
+    startedAt = performance.now();
+    timer = setTimeout(() => {
+      timer = undefined;
+      remaining = 3000;
+      step();
+      sync();
+    }, remaining);
+  }
+  function toggle() { manualPause = timer !== undefined; sync(); }
   function ready() {
     const doc = object.contentDocument;
-    if (doc?.documentElement.localName !== "svg") return;
+    if (doc?.documentElement.localName !== "svg" || doc.getElementById("tour-style")) return;
     const style = doc.createElementNS(ns, "style");
-    style.textContent = ".lit path{stroke:#154eb0;stroke-width:4}.lit text{fill:#154eb0;font-weight:bold}";
+    style.id = "tour-style";
+    style.textContent = "svg{cursor:pointer}.lit path{stroke:#154eb0;stroke-width:4}.lit text{fill:#154eb0;font-weight:bold}";
     doc.documentElement.append(style);
+    doc.addEventListener("click", toggle);
     controls.hidden = false;
+    sync();
   }
   object.addEventListener("load", ready);
   ready();
-  play.addEventListener("click", () => {
-    if (timer) { stop(); return; }
-    play.textContent = "Pause";
-    advance();
+  play.addEventListener("click", toggle);
+  controls.querySelector(".next").addEventListener("click", () => {
+    manualPause = true;
+    controls.querySelector("output").setAttribute("aria-live", "polite");
+    pause();
+    step();
+    remaining = 3000;
   });
-  controls.querySelector(".next").addEventListener("click", () => { stop(); step(); });
+  new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    sync();
+  }, {threshold: 0.15}).observe(object);
+  document.addEventListener("visibilitychange", sync);
+  panel.addEventListener("viewchange", sync);
+  reduced.addEventListener("change", () => { manualPause = reduced.matches; sync(); });
 }
 function select(index) {
-  stop();
   tabs.forEach((tab,i) => {
     tab.setAttribute("aria-selected", String(i === index));
     tab.tabIndex = i === index ? 0 : -1;
     panels[i].hidden = i !== index;
+    panels[i].dispatchEvent(new Event("viewchange"));
   });
 }
 document.querySelector(".views").setAttribute("role","tablist");
@@ -131,4 +169,3 @@ function readHash() {
 }
 readHash();
 window.addEventListener("hashchange",readHash);
-document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
