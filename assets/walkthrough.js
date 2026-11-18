@@ -5,8 +5,7 @@ const tours = {
     ["PostgreSQL signals that work is ready. The leader worker picks up the task in the background while the web API continues serving the portal.", "worker", "M647 122 V198"],
     ["The worker requests a lease for the run. The runner controller holds the Kubernetes permissions needed to provision the execution environment.", "control", "M759 244 H848"],
     ["The controller prepares an isolated runner for the assigned agent. The runner receives a scoped workspace and only the tools permitted for the job.", "task", "M957 285 V334 H706 V376"],
-    ["The isolated runner sends its request directly to the configured agent adapter. Claude Code, Codex and Hermes are examples of runtimes the adapter can connect.", "runner-adapter", "M603 421 H499 V514 H128 V643"],
-    ["The adapter calls the AI gateway. The gateway applies workspace policy and routes the request to a model or an authorised tool connection.", "exec-gateway", "M284 685 H311"],
+    ["Inside the runner, the configured agent adapter connects Claude Code, Codex or Hermes to the AI gateway. The gateway applies workspace policy before routing the request.", "exec-gateway", "M707 492 V581 H409 V644"],
     ["For inference, the AI gateway sends an LLM call to the model and provider configured for this workspace.", "route-model", "M505 685 H570 V633 H656"],
     ["For a tool call, the gateway uses the MCP tools connection. The MCP proxy checks the agent’s permissions before forwarding the call to the workspace server.", "route-mcp", "M505 685 H570 V737 H656"]
   ],
