@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive engineering case study by Sundaravel Selvaraj on AImetier, a control plane for AI agent teams.">
+  <meta name="theme-color" content="#f7f9fc">
+  <title>AImetier · Sundaravel Selvaraj</title>
+  <link rel="stylesheet" href="./assets/style.css">
+  <script src="./assets/walkthrough.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="identity" href="#top"><span class="monogram" aria-hidden="true">SS</span><span>Sundaravel Selvaraj <small>Senior Data / AI Engineer</small></span></a>
+      <nav aria-label="Main navigation">
+        <a href="#walkthrough">Walkthrough</a>
+        <a href="#architecture">Architecture</a>
+        <a class="contact-link" href="https://www.linkedin.com/in/sundara-vel-selvaraj/">LinkedIn <span aria-hidden="true" class="outbound"></span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap" tabindex="-1">
+    <section class="hero" aria-labelledby="title">
+      <p class="eyebrow">Engineering case study</p>
+      <h1 id="title">AImetier<span>.</span></h1>
+      <p class="subtitle">A control plane for AI agent teams</p>
+      <p class="intro">Coordinate agents across model providers, give them the context and tools to do the work, and tie completion to review evidence.</p>
+    </section>
+
+    <section class="workspace" id="walkthrough" aria-labelledby="walkthrough-title">
+      <header class="workspace-header">
+        <div class="workspace-title"><span class="logo" aria-hidden="true">A</span><div><h2 id="walkthrough-title">Run walkthrough</h2><p>Weekly data quality brief</p></div></div>
+        <span class="sample"><i aria-hidden="true"></i> Illustrative run</span>
+      </header>
+      <div class="workspace-body">
+        <aside class="rail" aria-label="Walkthrough controls">
+          <p id="steps-label">Run steps</p>
+          <div class="steps" aria-labelledby="steps-label">
+            <a href="#request" data-step="request"><span aria-hidden="true">01</span> Request</a>
+            <a href="#execution" data-step="execution"><span aria-hidden="true">02</span> Execution</a>
+            <a href="#evaluation" data-step="evaluation"><span aria-hidden="true">03</span> Evaluation</a>
+            <a href="#approval" data-step="approval"><span aria-hidden="true">04</span> Approval</a>
+          </div>
+        </aside>
+
+        <article id="request" class="step">
+          <div class="thread">
+            <div class="step-heading"><p class="context">Conversation</p><h3>Start with a clear request</h3></div>
+            <div class="message"><span class="avatar human" aria-hidden="true">O</span><div><b>Operator</b><p>Draft the weekly data quality brief. Use the latest validation results and flag any unresolved anomalies.</p></div></div>
+            <div class="message"><span class="avatar" aria-hidden="true">D</span><div><b>Data analyst agent</b><p>I’ll use the reporting skill and the last run’s context, then hand the brief to a reviewer.</p></div></div>
+          </div>
+          <div class="inspector"><p class="context">Run inspector</p><h4>Context and task</h4><dl><div><dt>Entry point</dt><dd>Portal conversation</dd></div><div><dt>Task</dt><dd>Draft a quality brief</dd></div><div><dt>Context</dt><dd>Prior observations and current validation results</dd></div></dl></div>
+        </article>
+
+        <article id="execution" class="step">
+          <div class="thread">
+            <div class="step-heading"><p class="context">Agent activity</p><h3>Run with context and approved tools</h3></div>
+            <div class="message"><span class="avatar" aria-hidden="true">D</span><div><b>Data analyst agent</b><p>I used the reporting skill to assemble the brief and linked the validation results behind each finding.</p></div></div>
+            <div class="message"><span class="avatar reviewer" aria-hidden="true">R</span><div><b>Reviewer agent</b><p>I have the draft and its evidence. I’ll check that the reported anomalies match the source results.</p></div></div>
+          </div>
+          <div class="inspector"><p class="context">Run inspector</p><h4>Execution context</h4><dl><div><dt>Dispatch</dt><dd>Background task queue</dd></div><div><dt>Model</dt><dd>Provider adapter selected for the agent</dd></div><div><dt>Inputs</dt><dd>Scoped memory and configured tools</dd></div></dl></div>
+        </article>
+
+        <article id="evaluation" class="step">
+          <div class="thread">
+            <div class="step-heading"><p class="context">Peer review</p><h3>Evaluate the draft against a rubric</h3></div>
+            <div class="message"><span class="avatar reviewer" aria-hidden="true">R</span><div><b>Reviewer agent</b><p>The anomaly counts reconcile. The brief includes source links and calls out the remaining issue.</p></div></div>
+            <div class="event"><span aria-hidden="true">✓</span><div><b>Review evidence recorded</b><p>The platform links the review result to this run.</p></div></div>
+          </div>
+          <div class="inspector"><p class="context">Run inspector</p><h4>Evaluation evidence</h4><dl><div><dt>Criteria</dt><dd>Accuracy, traceability, unresolved issues</dd></div><div><dt>Result</dt><dd>Peer review passed</dd></div><div><dt>Scope</dt><dd>Evidence attached to the run</dd></div></dl></div>
+        </article>
+
+        <article id="approval" class="step">
+          <div class="thread">
+            <div class="step-heading"><p class="context">Human checkpoint</p><h3>Pause before sharing the brief</h3></div>
+            <div class="event warning"><span aria-hidden="true">II</span><div><b>Waiting for operator approval</b><p>The draft and its review evidence are ready for the operator. The configured checkpoint holds the next action.</p></div></div>
+            <div class="message"><span class="avatar human" aria-hidden="true">O</span><div><b>Operator</b><p>I’ll check the remaining issue before deciding whether to share the brief.</p></div></div>
+          </div>
+          <div class="inspector"><p class="context">Run inspector</p><h4>Approval state</h4><dl><div><dt>Checkpoint</dt><dd>Human approval</dd></div><div><dt>State</dt><dd>Pending in this example</dd></div><div><dt>Audit trail</dt><dd>Run activity and review evidence</dd></div></dl></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="architecture" id="architecture" aria-labelledby="architecture-title">
+      <p class="eyebrow">Architecture</p>
+      <h2 id="architecture-title">What makes the run possible</h2>
+      <figure class="system-map" aria-labelledby="map-title">
+        <figcaption><span id="map-title">Agent run architecture</span><button class="replay" type="button" hidden>Replay flow <span aria-hidden="true">↻</span></button></figcaption>
+        <ol class="flow">
+          <li class="flow-node"><strong>Request</strong><small>Conversation or assigned task</small></li>
+          <li class="flow-node"><strong>Dispatch</strong><small>Queue and agent assignment</small></li>
+          <li class="flow-node runtime">
+            <strong>Execute</strong><small>Agent runner and provider adapter</small>
+            <div class="runtime-inputs"><b>Run context</b><span>Thread and durable memory</span><span>Approved tools and skills</span></div>
+          </li>
+          <li class="flow-node"><strong>Evaluate</strong><small>Agent-to-agent handoff and run evidence</small></li>
+          <li class="flow-node checkpoint"><strong>Approve</strong><small>Human checkpoint when configured</small></li>
+        </ol>
+        <p class="map-note"><span aria-hidden="true">⊙</span> Run events, costs, and review decisions feed the audit trail.</p>
+      </figure>
+      <div class="cards">
+        <article><span aria-hidden="true">⇄</span><h3>Model and provider adapters</h3><p>A common runtime interface dispatches runs across supported model providers and collects usage and cost events.</p></article>
+        <article><span aria-hidden="true">→</span><h3>Agent coordination</h3><p>Roles and task ownership define who does the work. Scheduled and event-driven workers dispatch tasks and support agent-to-agent handoffs (A2A).</p></article>
+        <article><span aria-hidden="true">≋</span><h3>Conversation and memory</h3><p>Threads capture user context. PostgreSQL and pgvector support semantic recall across runs, scoped to the agent by default.</p></article>
+        <article><span aria-hidden="true">⌘</span><h3>Tools and skills</h3><p>Configured tools give agents access to approved services, including integrations through the Model Context Protocol (MCP). Reusable skills carry task instructions across runs.</p></article>
+        <article><span aria-hidden="true">✓</span><h3>Evaluation and approvals</h3><p>Rubrics guide peer review. The server requires evidence tied to the run before completion, and workflows can pause for human approval.</p></article>
+        <article><span aria-hidden="true">◇</span><h3>Operational controls</h3><p>Scoped budgets set warning and hard-stop thresholds. Audit records and company-level data boundaries support oversight.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer">
+    <div><strong>Sundaravel Selvaraj</strong><p>TypeScript · Node.js · React · PostgreSQL · Docker · AWS</p></div>
+    <a href="https://www.linkedin.com/in/sundara-vel-selvaraj/">Connect on LinkedIn <span aria-hidden="true" class="outbound"></span></a>
+  </footer>
+</body>
+</html>
