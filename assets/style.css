@@ -22,6 +22,6 @@ header,.opening{background:#101724;color:#f7f8fc}.bar{min-height:74px;display:fl
 .controls .next::before{clip-path:polygon(0 0,70% 50%,0 100%,0 0,77% 0,96% 0,96% 100%,77% 100%,77% 0)}
 .controls .zoom::before{background:linear-gradient(currentColor,currentColor) right top/7px 2px,linear-gradient(currentColor,currentColor) right top/2px 7px,linear-gradient(currentColor,currentColor) left bottom/7px 2px,linear-gradient(currentColor,currentColor) left bottom/2px 7px,linear-gradient(-45deg,transparent 44%,currentColor 45% 55%,transparent 56%);background-repeat:no-repeat}
 .controls button:hover{background:#edf2fa}.controls .zoom[aria-pressed=true]{background:#dce9fe}
-#instance .paper object{aspect-ratio:1114/908}
+#instance .paper object{aspect-ratio:1114/792}
 .plate.enlarged .paper object{width:150%;min-width:840px;max-height:none}
 .step-caption{display:block;color:var(--blue);font-weight:600;font-size:.9rem;max-width:85ch}

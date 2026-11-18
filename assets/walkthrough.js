@@ -5,12 +5,10 @@ const tours = {
     ["PostgreSQL signals that work is ready. The leader worker picks up the task in the background while the web API continues serving the portal.", "worker", "M647 122 V198"],
     ["The worker requests a lease for the run. The runner controller holds the Kubernetes permissions needed to provision the execution environment.", "control", "M759 244 H848"],
     ["The controller prepares an isolated runner for the assigned agent. The runner receives a scoped workspace and only the tools permitted for the job.", "task", "M957 285 V334 H706 V376"],
-    ["The isolated agent runner passes the request to the agent connector. The connector hands it to the adapter configured for this agent.", "connector", "M603 421 H499 V514 H128 V566"],
-    ["The agent adapter links the chosen runtime to the platform. Whether the agent uses Claude Code, Codex, Gemini or Hermes, its requests go through the run gateway.", "runner-adapter", "M128 646 V707"],
-    ["The run gateway applies the workspace policy and routes each request according to what the agent needs for this step.", "exec-gateway", "M234 749 H310"],
-    ["When the agent needs model inference, the gateway sends an LLM call to the model and provider configured for the workspace.", "route-model", "M505 749 H570 V645 H656"],
-    ["When the agent needs a connected tool, the MCP proxy checks its permissions before forwarding the call to the workspace MCP server.", "route-mcp", "M505 749 H656"],
-    ["The gateway can also route requests to other tools enabled for the run. The available actions depend on the agent’s permissions.", "route-tools", "M505 749 H570 V853 H656"]
+    ["The isolated runner sends its request directly to the configured agent adapter. Claude Code, Codex and Hermes are examples of runtimes the adapter can connect.", "runner-adapter", "M603 421 H499 V514 H128 V643"],
+    ["The adapter calls the AI gateway. The gateway applies workspace policy and routes the request to a model or an authorised tool connection.", "exec-gateway", "M284 685 H311"],
+    ["For inference, the AI gateway sends an LLM call to the model and provider configured for this workspace.", "route-model", "M505 685 H570 V633 H656"],
+    ["For a tool call, the gateway uses the MCP tools connection. The MCP proxy checks the agent’s permissions before forwarding the call to the workspace server.", "route-mcp", "M505 685 H570 V737 H656"]
   ],
   run: [
     ["A weekly schedule triggers the data-quality brief. Once the schedule and agent are configured, the task can start without someone opening a chat.", "scope", "M100 119 V174"],
