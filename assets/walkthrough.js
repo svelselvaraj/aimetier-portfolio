@@ -1,10 +1,15 @@
 const tours = {
   instance: [
-    ["Agent Connect sends the request into the platform with the workspace and run context needed to identify the work.", "connect", "M43 201 H201"],
-    ["The gateway is the entry point. Workspace policy determines which execution capabilities the agent can use for this request.", "gateway", "M228 201 H304"],
-    ["For agent execution, the platform invokes the configured adapter. Claude Code, Codex, Gemini and Hermes are examples of supported runtimes.", "adapter", "M499 201 H564 V97 H650"],
-    ["For an LLM call, the platform selects the model and provider configured for the workspace and sends the inference request.", "llm", "M499 201 H650"],
-    ["For a connected tool, the MCP proxy checks the agent’s permissions and forwards the call to the authorised workspace server.", "mcp", "M499 201 H564 V305 H650"]
+    ["A request from the workspace portal reaches the HTTPS gateway. The gateway routes it to the web API, where the platform can check who is making the request.", "gateway", "M222 84 H295"],
+    ["The API resolves the user’s company and records the task in PostgreSQL. Row-level policies keep the task within that company’s workspace.", "web", "M488 86 H550"],
+    ["PostgreSQL signals that work is ready. The leader worker picks up the task in the background while the web API continues serving the portal.", "worker", "M647 122 V198"],
+    ["The worker requests a lease for the run. The runner controller holds the Kubernetes permissions needed to provision the execution environment.", "control", "M759 244 H848"],
+    ["The controller prepares an isolated runner for the assigned agent. The runner receives a scoped workspace and only the tools permitted for the job.", "task", "M957 285 V334 H706 V376"],
+    ["Once provisioned, the isolated agent runner sends its request through Agent Connect, carrying the context of the current workspace and run.", "exec-connect", "M603 421 H499 V514 H128 V707"],
+    ["The gateway is the entry point. Workspace policy determines which execution capabilities the agent can use for this request.", "exec-gateway", "M234 749 H310"],
+    ["For agent execution, the platform invokes the configured adapter. Claude Code, Codex, Gemini and Hermes are examples of supported runtimes.", "exec-adapter", "M505 749 H570 V645 H656"],
+    ["For an LLM call, the platform selects the model and provider configured for the workspace and sends the inference request.", "exec-llm", "M505 749 H656"],
+    ["For a connected tool, the MCP proxy checks the agent’s permissions and forwards the call to the authorised workspace server.", "exec-mcp", "M505 749 H570 V853 H656"]
   ],
   run: [
     ["A weekly schedule triggers the data-quality brief. Once the schedule and agent are configured, the task can start without someone opening a chat.", "scope", "M100 119 V174"],
