@@ -4,8 +4,8 @@ const tours = {
     ["The API signals the master worker when work is ready. The arrow shows the logical handoff, carried by PostgreSQL notifications in the split deployment.", "worker", "M525.5 155 L525.5 217"],
     ["Both the web API and the master worker access PostgreSQL, where pgvector supports memory retrieval. The API also uses object storage for files and attachments. Dashed lines show storage dependencies.", "postgres", "M600 136 L686 136 L686 172 L771 172 M634 249 L703 249 L703 203 L771 203"],
     ["The master worker dispatches work to isolated agent runners. Each runner uses its configured adapter, and the stack represents capacity for concurrent runs.", "runner", "M525.5 288 L525.5 337"],
-    ["For inference, the agent runner calls the AI gateway. The gateway routes the request to the model provider configured for the workspace.", "provider", "M668 393 L769 393 M986 393 L1053 393"],
-    ["For a connected tool call, the platform checks the agent’s permissions before forwarding its request to the authorised MCP server.", "tools", "M655 430 L700 430 L700 468 L769 468 M986 468 L1053 468"],
+    ["For inference, the agent runner calls the AI gateway. The gateway routes the request to the model provider configured for the workspace.", "provider", "M748 393 L769 393 M986 393 L1053 393"],
+    ["For a connected tool call, the platform checks the agent’s permissions before forwarding its request to the authorised MCP server.", "tools", "M735 430 L754 430 L754 468 L769 468 M986 468 L1053 468"],
     ["The runner asks the browser broker to launch a browser session. The agent uses that isolated session to carry out its browser action.", "session", "M523 456 L523 518"],
     ["The browser session sends outbound traffic through the egress proxy. Its destination policy controls which websites the session can reach.", "web", "M655 554 L769 554 M986 554 L1053 554"]
   ],
